@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PNRR Molise — Dashboard Monitoraggio</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PNRR Molise">
+<link rel="apple-touch-icon" href="icon-192.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -388,5 +394,6 @@ document.querySelectorAll('#t-proj th[data-s]').forEach(th=>th.addEventListener(
 document.querySelectorAll('#t-proj th').forEach(t=>t.classList.remove('sa','sd'));
 if(pSC===th.dataset.s)pSD*=-1;else{pSC=th.dataset.s;pSD=-1;}th.classList.add(pSD===1?'sa':'sd');fProj();}));
 fProj();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
 </body></html>
