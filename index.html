@@ -120,11 +120,16 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 <div class="cc full"><div class="ct2">Budget vs Pagamenti per Misura</div><div class="cb tall"><canvas id="c-misb"></canvas></div></div>
 <div class="cc full"><div class="ct2">Avanzamento % per Misura</div><div class="cb xt"><canvas id="c-misa"></canvas></div></div>
 <div class="cc full"><div class="ct2">Stato Fasi Procedurali per Misura</div><div class="cb tall"><canvas id="c-iter"></canvas></div></div>
-</div></div>
+</div>
+<div class="st">Riepilogo Misure <button class="fb" id="btn-dl-mis" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
+<div class="tw" style="max-height:400px;overflow-y:auto"><table id="t-mis"><thead><tr>
+<th data-s="misura">Misura</th><th data-s="descrizione">Descrizione</th><th data-s="missione">Missione</th><th data-s="n_progetti">N.CUP</th><th data-s="budget_totale">Budget</th><th data-s="totale_pagamenti">Pagamenti</th><th data-s="avanzamento_pct">Avanz.%</th>
+</tr></thead><tbody></tbody></table></div>
+</div>
 
 <!-- ESECUZIONE -->
 <div class="tp" id="tab-esecuzione">
-<div class="st">Fase di Esecuzione per CUP — Inizio e Fine Esecuzione</div>
+<div class="st">Fase di Esecuzione per CUP — Inizio e Fine Esecuzione <button class="fb" id="btn-dl-exec" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
 <div class="cg">
 <div class="cc"><div class="ct2">Stato Esecuzione (globale)</div><div class="cb"><canvas id="c-ep"></canvas></div></div>
 <div class="cc"><div class="ct2">Esecuzione per Misura</div><div class="cb tall"><canvas id="c-em"></canvas></div></div>
@@ -143,7 +148,7 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 <div class="tp" id="tab-alert">
 <div id="ab"></div>
 <div class="cg"><div class="cc full"><div class="ct2">Alert per Misura</div><div class="cb"><canvas id="c-am"></canvas></div></div></div>
-<div class="st">CUP con Alert</div>
+<div class="st">CUP con Alert <button class="fb" id="btn-dl-alert" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
 <div class="tw" style="max-height:500px;overflow-y:auto"><table id="t-alert"><thead><tr>
 <th data-s="alert_level">Alert</th><th data-s="cup">CUP</th><th data-s="misura">Misura</th><th data-s="titolo_intervento">Titolo</th>
 <th data-s="budget">Budget</th><th data-s="avanzamento_pct">Avanz.</th><th data-s="esecuzione_fine_prev">Scadenza Esec.</th>
@@ -164,7 +169,7 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 <div class="tp" id="tab-indicatori"><div class="cg">
 <div class="cc full"><div class="ct2">Target Programmati vs Realizzati</div><div class="cb tall"><canvas id="c-ind"></canvas></div></div>
 </div>
-<div class="st">Dettaglio Indicatori</div>
+<div class="st">Dettaglio Indicatori <button class="fb" id="btn-dl-ind" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
 <div class="tw" style="max-height:500px;overflow-y:auto"><table id="t-ind"><thead><tr>
 <th data-s="misura">Misura</th><th data-s="indicatore">Indicatore</th><th data-s="unita_misura">Unità</th><th data-s="tot_programmato">Programmato</th><th data-s="tot_realizzato">Realizzato</th><th data-s="pct_raggiungimento">%</th>
 </tr></thead><tbody></tbody></table></div>
@@ -179,7 +184,7 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 
 <!-- RUP -->
 <div class="tp" id="tab-rup">
-<div class="st">Responsabili Unici del Procedimento</div>
+<div class="st">Responsabili Unici del Procedimento <button class="fb" id="btn-dl-rup" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
 <div class="tw"><table id="t-rup"><thead><tr>
 <th data-s="rup">RUP</th><th data-s="n_cup">N. CUP</th><th data-s="budget">Budget</th><th data-s="pagamenti">Pagamenti</th><th data-s="avanz">Avanzamento</th><th data-s="n_critici">Critici</th>
 </tr></thead><tbody></tbody></table></div>
@@ -192,6 +197,7 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 <select class="fs" id="f-miss"><option value="all">Tutte le Missioni</option></select>
 <select class="fs" id="f-rup"><option value="all">Tutti i RUP</option></select>
 <select class="fs" id="f-al"><option value="all">Tutti gli Alert</option><option value="CRITICO">Critici</option><option value="ATTENZIONE">Attenzione</option><option value="OK">OK</option></select>
+<button class="fb" id="btn-dl-proj" style="font-size:.68rem">📥 Scarica Excel</button>
 </div>
 <div class="tw" style="max-height:600px;overflow-y:auto"><table id="t-proj"><thead><tr>
 <th data-s="alert_level">⚠</th><th data-s="cup">CUP</th><th data-s="misura">Misura</th><th data-s="titolo_intervento">Titolo</th><th data-s="rup">RUP</th>
@@ -354,6 +360,45 @@ if(iF.length)new Chart(document.getElementById('c-ind'),{type:'bar',data:{labels
 let indD=[...D.indicatori];
 function rInd(d){document.querySelector('#t-ind tbody').innerHTML=d.map(i=>{const low=i.pct_raggiungimento!=null&&i.pct_raggiungimento<50;return`<tr style="${low?'background:rgba(239,68,68,.08)':''}"><td>${i.misura||'—'}</td><td style="max-width:260px">${i.indicatore}</td><td>${i.unita_misura||'—'}</td><td class="mo">${i.tot_programmato!=null?Number(i.tot_programmato).toLocaleString('it-IT'):'—'}</td><td class="mo">${i.tot_realizzato!=null?Number(i.tot_realizzato).toLocaleString('it-IT'):'—'}</td><td><span class="pb"><span class="pf" style="width:${Math.min(i.pct_raggiungimento||0,100)}%;background:${pC(i.pct_raggiungimento||0)}"></span></span>${pct(i.pct_raggiungimento)}${low?' ⚠️':''}</td></tr>`;}).join('');}
 rInd(indD);mkSort('t-ind',()=>indD,d=>{indD=d;rInd(d)});
+
+// ═══ GENERIC EXCEL EXPORT ═══
+function dlXls(filename,sheetName,cols,rows){
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+let x='<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Excel.Sheet"?>\n';
+x+='<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n';
+x+='<Styles><Style ss:ID="hd"><Font ss:Bold="1" ss:Size="11"/><Interior ss:Color="#D9E2F3" ss:Pattern="Solid"/></Style>';
+x+='<Style ss:ID="n"><NumberFormat ss:Format="#,##0.00"/></Style>';
+x+='<Style ss:ID="p"><NumberFormat ss:Format="0.0%"/></Style>';
+x+='<Style ss:ID="lo"><Interior ss:Color="#FDE8E8" ss:Pattern="Solid"/></Style></Styles>\n';
+x+='<Worksheet ss:Name="'+esc(sheetName)+'"><Table>\n';
+cols.forEach(c=>{x+='<Column ss:Width="'+(c.w||100)+'"/>';});
+x+='\n<Row>'+cols.map(c=>'<Cell ss:StyleID="hd"><Data ss:Type="String">'+esc(c.h)+'</Data></Cell>').join('')+'</Row>\n';
+rows.forEach(r=>{x+='<Row>';cols.forEach((c,i)=>{const v=r[i];const tp=c.t||'s';
+if(tp==='n')x+='<Cell ss:StyleID="n"><Data ss:Type="Number">'+(v!=null?v:0)+'</Data></Cell>';
+else if(tp==='p'){const pv=(v||0)/100;x+='<Cell ss:StyleID="p"><Data ss:Type="Number">'+pv+'</Data></Cell>';}
+else x+='<Cell'+(c.hl&&r[c.hl]?'ss:StyleID="lo"':'')+''+'><Data ss:Type="String">'+esc(v)+'</Data></Cell>';
+});x+='</Row>\n';});
+x+='</Table></Worksheet></Workbook>';
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([x],{type:'application/vnd.ms-excel'}));
+a.download=filename;a.click();URL.revokeObjectURL(a.href);}
+
+// Export Indicatori
+document.getElementById('btn-dl-ind').addEventListener('click',()=>{
+dlXls('indicatori_pnrr.xls','Indicatori',
+[{h:'Misura',w:120},{h:'Indicatore',w:300},{h:'Unità',w:100},{h:'Programmato',w:120,t:'n'},{h:'Realizzato',w:120,t:'n'},{h:'% Raggiungimento',w:100,t:'p'}],
+indD.map(i=>[i.misura,i.indicatore,i.unita_misura,i.tot_programmato,i.tot_realizzato,i.pct_raggiungimento]));});
+
+// Export Alert
+document.getElementById('btn-dl-alert').addEventListener('click',()=>{
+dlXls('alert_cup_pnrr.xls','Alert CUP',
+[{h:'Alert',w:80},{h:'CUP',w:160},{h:'Misura',w:120},{h:'Titolo',w:280},{h:'Budget',w:120,t:'n'},{h:'Avanz.%',w:80,t:'p'},{h:'Scadenza Esec.',w:110}],
+alD.map(p=>[p.alert_level,p.cup,p.misura,p.titolo_intervento,p.budget,p.avanzamento_pct,p.esecuzione_fine_prev]));});
+
+// Export Esecuzione
+document.getElementById('btn-dl-exec').addEventListener('click',()=>{
+dlXls('esecuzione_cup_pnrr.xls','Esecuzione',
+[{h:'Stato',w:110},{h:'CUP',w:160},{h:'Misura',w:120},{h:'Titolo',w:280},{h:'RUP',w:150},{h:'Inizio Esec.',w:100},{h:'Fine Prevista',w:100},{h:'Fine Effettiva',w:100},{h:'Ritardo gg',w:80,t:'n'}],
+exD.map(e=>[e.stato,e.cup,e.misura,e.titolo_intervento,e.rup,e.data_inizio_eff,e.data_fine_prev,e.data_fine_eff,e.ritardo_giorni]));});
 }
 
 // ═══ MAPPA ═══
@@ -379,6 +424,10 @@ document.querySelectorAll('[data-mf]').forEach(b=>b.addEventListener('click',()=
 let ruD=[...(D.rup_stats||[])];
 function rRup(d){document.querySelector('#t-rup tbody').innerHTML=d.map(r=>`<tr><td><strong>${r.rup}</strong></td><td class="mo">${r.n_cup}</td><td class="mo">${fM(r.budget)}</td><td class="mo">${fM(r.pagamenti)}</td><td><span class="pb"><span class="pf" style="width:${Math.min(r.avanz||0,100)}%;background:${pC(r.avanz||0)}"></span></span>${pct(r.avanz)}</td><td>${r.n_critici>0?'<span style="color:var(--red)">'+r.n_critici+'</span>':'0'}</td></tr>`).join('');}
 rRup(ruD);mkSort('t-rup',()=>ruD,d=>{ruD=d;rRup(d)});
+document.getElementById('btn-dl-rup').addEventListener('click',()=>{
+dlXls('rup_pnrr.xls','RUP',
+[{h:'RUP',w:200},{h:'N. CUP',w:70,t:'n'},{h:'Budget',w:130,t:'n'},{h:'Pagamenti',w:130,t:'n'},{h:'Avanzamento %',w:100,t:'p'},{h:'N. Critici',w:80,t:'n'}],
+ruD.map(r=>[r.rup,r.n_cup,r.budget,r.pagamenti,r.avanz,r.n_critici]));});
 
 // ═══ PROGETTI ═══
 let pD=[...D.progetti],pSC='budget',pSD=-1;
@@ -394,6 +443,25 @@ document.querySelectorAll('#t-proj th[data-s]').forEach(th=>th.addEventListener(
 document.querySelectorAll('#t-proj th').forEach(t=>t.classList.remove('sa','sd'));
 if(pSC===th.dataset.s)pSD*=-1;else{pSC=th.dataset.s;pSD=-1;}th.classList.add(pSD===1?'sa':'sd');fProj();}));
 fProj();
+// Export Progetti (current filtered view)
+document.getElementById('btn-dl-proj').addEventListener('click',()=>{
+const f=pD.filter(p=>{const fm=document.getElementById('f-miss').value,fr=document.getElementById('f-rup').value,fa=document.getElementById('f-al').value,s=document.getElementById('src').value.toLowerCase();
+if(fm!=='all'&&p.missione!==fm)return false;if(fr!=='all'&&p.rup!==fr)return false;if(fa!=='all'&&p.alert_level!==fa)return false;if(s&&!JSON.stringify(p).toLowerCase().includes(s))return false;return true;});
+dlXls('progetti_pnrr.xls','Progetti',
+[{h:'Alert',w:80},{h:'CUP',w:160},{h:'Misura',w:120},{h:'Titolo',w:280},{h:'RUP',w:150},{h:'Budget',w:130,t:'n'},{h:'Pagamenti',w:130,t:'n'},{h:'Avanz.%',w:80,t:'p'},{h:'Stato Esecuz.',w:110},{h:'Area',w:80}],
+f.map(p=>[p.alert_level,p.cup,p.misura,p.titolo_intervento,p.rup,p.budget,p.pagato,p.avanzamento_pct,p.esecuzione_stato,p.area]));});
+
+// Misure table render + export
+if(D.misure&&D.misure.length){
+let misD=[...D.misure];
+function rMis(d){document.querySelector('#t-mis tbody').innerHTML=d.map(m=>`<tr><td>${m.misura}</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.descrizione||'—'}</td><td>${m.missione||'—'}</td><td class="mo">${m.n_progetti}</td><td class="mo">${fM(m.budget_totale)}</td><td class="mo">${fM(m.totale_pagamenti)}</td><td><span class="pb"><span class="pf" style="width:${Math.min(m.avanzamento_pct||0,100)}%;background:${pC(m.avanzamento_pct||0)}"></span></span>${pct(m.avanzamento_pct)}</td></tr>`).join('');}
+rMis(misD);mkSort('t-mis',()=>misD,d=>{misD=d;rMis(d)});
+document.getElementById('btn-dl-mis').addEventListener('click',()=>{
+dlXls('misure_pnrr.xls','Misure',
+[{h:'Misura',w:130},{h:'Descrizione',w:300},{h:'Missione',w:80},{h:'N. CUP',w:70,t:'n'},{h:'Budget',w:130,t:'n'},{h:'Pagamenti',w:130,t:'n'},{h:'Avanz.%',w:80,t:'p'}],
+misD.map(m=>[m.misura,m.descrizione,m.missione,m.n_progetti,m.budget_totale,m.totale_pagamenti,m.avanzamento_pct]));});
+}
+
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
 </body></html>
