@@ -1,4 +1,4 @@
-const CACHE_NAME='pnrr-molise-v202603062350';
+const CACHE_NAME='pnrr-molise-v202603070049';
 const ASSETS=['./','./index.html','./data.js','./manifest.json',
 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',

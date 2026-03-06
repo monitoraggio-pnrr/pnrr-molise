@@ -265,14 +265,7 @@ const mC=['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899',
 const SC={COMPLETATA:'#10b981',IN_CORSO:'#3b82f6',IN_RITARDO:'#ef4444',NON_AVVIATA:'#475569',COMPLETATA_RITARDO:'#f59e0b'};
 const fS=f=>{if(!f)return'—';const p=f.indexOf('-');return p>0?f.substring(0,p):f.substring(0,15)};
 
-// Logos
-(function(){
-    const h=document.getElementById('hdr-logos');
-    const L=D.logos||{};
-    if(L.molise){const i=document.createElement('img');i.src='data:image/png;base64,'+L.molise;i.alt='Regione Molise';i.style.height='42px';h.insertBefore(i,h.firstChild);}
-    if(L.italia_domani){const i=document.createElement('img');i.src='data:image/png;base64,'+L.italia_domani;i.alt='Italia Domani';h.appendChild(i);}
-    if(L.eu){const i=document.createElement('img');i.src='data:image/png;base64,'+L.eu;i.alt='Finanziato UE';h.appendChild(i);}
-})();
+// Logos are injected statically in HTML by genera_dashboard.py
 
 // Sortable helper
 function mkSort(tid,dataFn,renderFn){
