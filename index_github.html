@@ -236,15 +236,6 @@ select.fs{background:var(--s);border:1px solid var(--bd);color:var(--t);padding:
 <th data-s="trasferiti_erogati">Trasferiti</th><th data-s="pagamenti_effettuati">Pagamenti</th><th data-s="saldo_cassa">Saldo</th>
 <th data-s="n_anticipazioni">Antic.</th><th data-s="n_intermedi">Interm.</th><th data-s="n_saldi_finali">Saldi</th>
 </tr></thead><tbody></tbody></table></div>
-
-<div class="st" style="margin-top:1.5rem">Trasferimenti vs Pagamenti per RUP <button class="fb" id="btn-dl-trasf-rup" style="margin-left:1rem;font-size:.68rem">📥 Scarica Excel</button></div>
-<div class="cg">
-<div class="cc full"><div class="ct2">Saldo Cassa per RUP (Trasferiti − Pagamenti)</div><div class="cb tall"><canvas id="c-trasf-rup"></canvas></div></div>
-</div>
-<div class="tw" style="max-height:500px;overflow-y:auto"><table id="t-trasf-rup"><thead><tr>
-<th data-s="rup">RUP</th><th data-s="n_cup">N.CUP</th><th data-s="budget">Budget</th>
-<th data-s="trasferiti">Trasferiti</th><th data-s="pagamenti">Pagamenti</th><th data-s="saldo">Saldo</th><th data-s="n_alert">CUP Alert</th>
-</tr></thead><tbody></tbody></table></div>
 </div>
 
 <!-- CUP NAZIONALI -->
@@ -457,21 +448,30 @@ exD.map(e=>[e.stato,e.cup,e.misura,e.titolo_intervento,e.rup,e.data_inizio_eff,e
 
 // ═══ MAPPA ═══
 let map;
-const CC={'CAMPOBASSO':[41.5603,14.6628],'ISERNIA':[41.5960,14.2301],'TERMOLI':[42.0025,14.9924],'BOJANO':[41.4833,14.4667],'LARINO':[41.8,14.9167],'VENAFRO':[41.4833,14.05],'AGNONE':[41.8167,14.3667],'TRIVENTO':[41.7833,14.55],'RICCIA':[41.4833,14.8333],'GUGLIONESI':[41.9167,14.9167],'CAMPOMARINO':[41.95,15.0333],'MONTENERO DI BISACCIA':[41.95,14.7833],'SANTA CROCE DI MAGLIANO':[41.7167,14.9833],'PETTORANELLO':[41.5667,14.2833],'FROSOLONE':[41.6,14.45],'CASTELPETROSO':[41.55,14.35],'FORNELLI':[41.6167,14.1333],'COLLI AL VOLTURNO':[41.6167,14.1],'MONTERODUNI':[41.5167,14.1667],'CERRO AL VOLTURNO':[41.65,14.1],'CAPRACOTTA':[41.8333,14.2667],'PESCHE':[41.6167,14.2667],'SEPINO':[41.4,14.4833],'BARANELLO':[41.5333,14.55],'CAMPOCHIARO':[41.45,14.5167],'FERRAZZANO':[41.5333,14.6667],'ORATINO':[41.5833,14.5833],'CASTROPIGNANO':[41.6167,14.5667],'SAN MARTINO IN PENSILIS':[41.8667,15.0167],'PORTOCANNONE':[41.9167,15.0333],'PALATA':[41.8833,14.7833],'TAVENNA':[41.9167,14.75],'GAMBATESA':[41.5,14.9167],'JELSI':[41.5167,14.8],'TORO':[41.5667,14.7667],'BONEFRO':[41.7,14.9333],'COLLETORTO':[41.6667,14.9667],'ROTELLO':[41.75,15.0],'URURI':[41.8167,15.0],'VINCHIATURO':[41.4833,14.5833],'MACCHIAGODENA':[41.5667,14.4333],'SAN GIULIANO DEL SANNIO':[41.4667,14.6333],'DURONIA':[41.6667,14.4667],'MOLISE':[41.6333,14.35],'BAGNOLI DEL TRIGNO':[41.6933,14.4533],'FOSSALTO':[41.6667,14.5333],'LIMOSANO':[41.6333,14.6],'MONTAGANO':[41.65,14.6667],'RIPALIMOSANI':[41.5333,14.7],'LUPARA':[41.7667,14.7333],'MORRONE DEL SANNIO':[41.7167,14.7833],'CASACALENDA':[41.7333,14.85],'PROVVIDENTI':[41.7167,14.8167],'MONTEMITRO':[41.8667,14.65],'ACQUAVIVA COLLECROCE':[41.8667,14.7167],'SAN FELICE DEL MOLISE':[41.8833,14.6833],'MAFALDA':[41.95,14.7167],'MONTECILFONE':[41.9167,14.8333],'PIETRACATELLA':[41.5833,14.8833],'TUFARA':[41.4833,14.95],'CERCEMAGGIORE':[41.4667,14.7167],'CERCEPICCOLA':[41.4667,14.6833],'SAN POLO MATESE':[41.4333,14.5333],'CANTALUPO NEL SANNIO':[41.5167,14.3833]};
-function initMap(){if(map)return;map=L.map('map').setView([41.56,14.46],9);
+const CC={'ACQUAVIVA COLLECROCE':[41.8667,14.7167],'ACQUAVIVA D\'ISERNIA':[41.6667,14.15],'AGNONE':[41.8089,14.3756],'BAGNOLI DEL TRIGNO':[41.6933,14.4533],'BARANELLO':[41.5283,14.555],'BOJANO':[41.4833,14.4667],'BUSSO':[41.55,14.5667],'CAMPOBASSO':[41.5603,14.6628],'CAMPODIPIETRA':[41.5575,14.7419],'CAMPOLIETO':[41.6333,14.7667],'CAMPOMARINO':[41.9528,15.0333],'CANTALUPO NEL SANNIO':[41.5167,14.3833],'CAROVILLI':[41.65,14.2833],'CASACALENDA':[41.7333,14.85],'CASALCIPRANO':[41.5667,14.5333],'CASTEL DEL GIUDICE':[41.85,14.2167],'CASTELMAURO':[41.8333,14.7167],'CASTELPETROSO':[41.55,14.35],'CASTELPIZZUTO':[41.5167,14.2833],'CASTROPIGNANO':[41.6167,14.5667],'CERCEMAGGIORE':[41.4667,14.7167],'CERCEPICCOLA':[41.4667,14.6833],'CERRO AL VOLTURNO':[41.65,14.1],'CIVITACAMPOMARANO':[41.7833,14.6833],'CIVITANOVA DEL SANNIO':[41.6667,14.3333],'COLLE D\'ANCHISE':[41.5167,14.5167],'COLLETORTO':[41.6667,14.9667],'COLLI A VOLTURNO':[41.6167,14.1],'FILIGNANO':[41.55,14.05],'FOSSALTO':[41.6667,14.5333],'FROSOLONE':[41.6,14.45],'GAMBATESA':[41.5083,14.9167],'GILDONE':[41.5167,14.75],'GUARDIALFIERA':[41.8,14.7833],'GUARDIAREGIA':[41.4333,14.5333],'GUGLIONESI':[41.9167,14.9167],'ISERNIA':[41.596,14.2301],'JELSI':[41.5167,14.8],'LARINO':[41.8,14.9167],'LIMOSANO':[41.6333,14.6],'LUCITO':[41.7333,14.7],'LUPARA':[41.7667,14.7333],'MACCHIA D\'ISERNIA':[41.5833,14.15],'MACCHIA VALFORTORE':[41.6,14.9167],'MACCHIAGODENA':[41.5667,14.4333],'MAFALDA':[41.95,14.7167],'MATRICE':[41.6167,14.7],'MIRABELLO SANNITICO':[41.5167,14.6667],'MIRANDA':[41.6333,14.25],'MOLISE':[41.6333,14.35],'MONACILIONI':[41.6167,14.8],'MONTAGANO':[41.65,14.6667],'MONTECILFONE':[41.9167,14.8333],'MONTEFALCONE NEL SANNIO':[41.8667,14.65],'MONTELONGO':[41.7333,14.95],'MONTENERO DI BISACCIA':[41.95,14.7833],'MONTERODUNI':[41.5167,14.1667],'MONTORIO NEI FRENTANI':[41.7167,14.9333],'MORRONE DEL SANNIO':[41.7167,14.7833],'ORATINO':[41.5833,14.5833],'PALATA':[41.8833,14.7833],'PETACCIATO':[42.0,14.8667],'PETRELLA TIFERNINA':[41.6833,14.7],'PETTORANELLO DEL MOLISE':[41.5667,14.2833],'PIETRABBONDANTE':[41.75,14.3833],'PIETRACATELLA':[41.5833,14.8833],'POGGIO SANNITA':[41.7833,14.35],'PORTOCANNONE':[41.9167,15.0333],'POZZILLI':[41.5167,14.0667],'RICCIA':[41.4833,14.8333],'RIONERO SANNITICO':[41.7167,14.1167],'RIPALIMOSANI':[41.5333,14.7],'ROCCAMANDOLFI':[41.4833,14.35],'ROCCHETTA A VOLTURNO':[41.6167,14.0833],'ROTELLO':[41.75,15.0],'SALCITO':[41.75,14.5167],'SAN BIASE':[41.7167,14.5833],'SAN FELICE DEL MOLISE':[41.8833,14.6833],'SAN GIOVANNI IN GALDO':[41.6,14.7667],'SAN GIULIANO DI PUGLIA':[41.6833,14.9667],'SAN MARTINO IN PENSILIS':[41.8667,15.0167],'SAN MASSIMO':[41.4833,14.4333],'SAN PIETRO AVELLANA':[41.7833,14.2],'SANT\'ANGELO LIMOSANO':[41.6833,14.6],'SANT\'ELENA SANNITA':[41.6333,14.45],'SANT\'ELIA A PIANISI':[41.6167,14.8833],'SANTA CROCE DI MAGLIANO':[41.7167,14.9833],'SANTA MARIA DEL MOLISE':[41.55,14.35],'SEPINO':[41.4,14.4833],'SESTO CAMPANO':[41.4333,14.0667],'SPINETE':[41.55,14.4833],'TAVENNA':[41.9167,14.75],'TERMOLI':[42.0025,14.9924],'TORELLA DEL SANNIO':[41.6333,14.5],'TORO':[41.5667,14.7667],'TRIVENTO':[41.7833,14.55],'TUFARA':[41.4833,14.95],'URURI':[41.8167,15.0],'VASTOGIRARDI':[41.7667,14.25],'VENAFRO':[41.4833,14.05],'VINCHIATURO':[41.4833,14.5833]};
+function initMap(){if(map)return;if(typeof L==='undefined'){console.warn('Leaflet not loaded');return;}
+map=L.map('map').setView([41.56,14.46],9);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(map);
-fetch('https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits/IT/reg/14.json').then(r=>r.ok?r.json():null).then(g=>{if(g)L.geoJSON(g,{style:{fillColor:'#3b82f6',fillOpacity:.03,color:'#3b82f6',weight:2,opacity:.4}}).addTo(map)}).catch(()=>{});
+try{fetch('https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits/IT/reg/14.json').then(r=>r.ok?r.json():null).then(g=>{if(g&&typeof L!=='undefined')L.geoJSON(g,{style:{fillColor:'#3b82f6',fillOpacity:.03,color:'#3b82f6',weight:2,opacity:.4}}).addTo(map)}).catch(()=>{});}catch(e){}
 rMap('all');}
-function rMap(filter){if(!map)return;map.eachLayer(l=>{if(l instanceof L.CircleMarker)map.removeLayer(l)});
+function rMap(filter){if(!map||typeof L==='undefined')return;map.eachLayer(l=>{if(l instanceof L.CircleMarker)map.removeLayer(l)});
+if(D.geo_loc&&D.geo_loc.length){
+D.geo_loc.forEach(g=>{const co=CC[g.comune];if(!co)return;
+const r=Math.max(6,Math.min(28,4+Math.sqrt(g.n_cup)*4));
+L.circleMarker(co,{radius:r,fillColor:'#3b82f6',color:'#fff',weight:1.5,opacity:.9,fillOpacity:.7})
+.bindPopup(`<b>${g.comune}</b> (${g.provincia||''})<br>${g.n_cup} interventi<br>Budget: ${fM(g.budget)}`).addTo(map);});
+const rg=D.geo_regionale||{};
+if(rg.n_cup>0)L.circleMarker([41.56,14.46],{radius:45,fillColor:'#8b5cf6',color:'#8b5cf6',weight:0,fillOpacity:.07}).bindPopup(`<b>Tutta la regione</b><br>${rg.n_cup} interventi diffusi<br>Budget: ${fM(rg.budget)}`).addTo(map);
+} else {
 const lc={},rw=[];
 D.progetti.forEach(p=>{if(filter==='CRITICO'&&p.alert_level!=='CRITICO')return;
 const ti=(p.titolo_intervento||'').toUpperCase();let matched=false;
-for(const[com,co]of Object.entries(CC)){if(ti.includes(com)){const k=com;if(!lc[k])lc[k]={co,n:0,b:0};lc[k].n++;lc[k].b+=(p.budget||0);matched=true;break;}}
+for(const[com,co]of Object.entries(CC)){if(ti.includes(com)){if(!lc[com])lc[com]={co,n:0,b:0};lc[com].n++;lc[com].b+=(p.budget||0);matched=true;break;}}
 if(!matched)rw.push(p);});
 Object.entries(lc).forEach(([com,d])=>{const r=Math.max(6,Math.min(25,4+Math.sqrt(d.n)*4));
 L.circleMarker(d.co,{radius:r,fillColor:'#3b82f6',color:'#fff',weight:1.5,opacity:.9,fillOpacity:.7}).bindPopup(`<b>${com}</b><br>${d.n} interventi<br>Budget: ${fM(d.b)}`).addTo(map);});
-if(rw.length>3)L.circleMarker([41.56,14.46],{radius:45,fillColor:'#8b5cf6',color:'#8b5cf6',weight:0,fillOpacity:.07}).bindPopup(`<b>Tutta la regione / non localizzati</b><br>${rw.length} interventi<br>Budget: ${fM(rw.reduce((s,p)=>s+(p.budget||0),0))}`).addTo(map);
-}
+if(rw.length>3)L.circleMarker([41.56,14.46],{radius:45,fillColor:'#8b5cf6',color:'#8b5cf6',weight:0,fillOpacity:.07}).bindPopup(`<b>Non localizzati</b><br>${rw.length} interventi`).addTo(map);
+}}
 document.querySelectorAll('[data-mf]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-mf]').forEach(x=>x.classList.remove('active'));b.classList.add('active');rMap(b.dataset.mf);}));
 
 // ═══ RUP ═══
@@ -567,25 +567,6 @@ rCas(casD);mkSort('t-cassa',()=>casD,d=>{casD=d;rCas(d)});
 document.getElementById('btn-dl-cassa').addEventListener('click',()=>{
 dlXls('trasferimenti_cassa_pnrr.xls','Alert Cassa',[{h:'Stato',w:160},{h:'CUP',w:160},{h:'Misura',w:120},{h:'Titolo',w:280},{h:'Trasferiti',w:130,t:'n'},{h:'Pagamenti',w:130,t:'n'},{h:'Saldo',w:130,t:'n'},{h:'N.Antic.',w:60,t:'n'},{h:'N.Interm.',w:60,t:'n'},{h:'N.Saldi',w:60,t:'n'}],
 casD.map(c=>[c.stato_cassa,c.cup,c.misura,c.titolo_intervento,c.trasferiti_erogati,c.pagamenti_effettuati,c.saldo_cassa,c.n_anticipazioni,c.n_intermedi,c.n_saldi_finali]));});
-}
-
-// ═══ TRASFERIMENTI PER RUP ═══
-if(D.trasf_rup&&D.trasf_rup.length){
-const trR=D.trasf_rup.filter(r=>r.pagamenti>0||r.trasferiti>0);
-if(trR.length){
-new Chart(document.getElementById('c-trasf-rup'),{type:'bar',data:{
-labels:trR.map(r=>(r.rup||'N/D').substring(0,25)+(r.rup&&r.rup.length>25?'...':'')),
-datasets:[
-{label:'Trasferiti erogati',data:trR.map(r=>r.trasferiti||0),backgroundColor:'rgba(59,130,246,.5)',borderRadius:4},
-{label:'Pagamenti effettuati',data:trR.map(r=>r.pagamenti||0),backgroundColor:'rgba(239,68,68,.4)',borderRadius:4}
-]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{ticks:{callback:v=>fM(v)},grid:{color:'#1e293b44'}},y:{grid:{display:false},ticks:{font:{size:9}}}},plugins:{tooltip:ttCb}}});
-}
-let trRD=[...D.trasf_rup];
-function rTrRup(d){document.querySelector('#t-trasf-rup tbody').innerHTML=d.map(r=>{const neg=(r.saldo||0)<0;return`<tr style="${neg?'background:rgba(239,68,68,.06)':''}"><td><strong>${r.rup||'—'}</strong></td><td class="mo">${r.n_cup}</td><td class="mo">${fM(r.budget)}</td><td class="mo">${fM(r.trasferiti)}</td><td class="mo">${fM(r.pagamenti)}</td><td class="mo" style="font-weight:600;color:${neg?'var(--red)':'var(--grn)'}">${fM(r.saldo)}</td><td class="mo" style="color:${r.n_alert>0?'var(--red)':'var(--grn)'}">${r.n_alert||0}</td></tr>`;}).join('');}
-rTrRup(trRD);mkSort('t-trasf-rup',()=>trRD,d=>{trRD=d;rTrRup(d)});
-document.getElementById('btn-dl-trasf-rup').addEventListener('click',()=>{
-dlXls('trasferimenti_rup_pnrr.xls','Trasf. per RUP',[{h:'RUP',w:200},{h:'N.CUP',w:70,t:'n'},{h:'Budget',w:130,t:'n'},{h:'Trasferiti',w:130,t:'n'},{h:'Pagamenti',w:130,t:'n'},{h:'Saldo',w:130,t:'n'},{h:'CUP Alert',w:80,t:'n'}],
-trRD.map(r=>[r.rup,r.n_cup,r.budget,r.trasferiti,r.pagamenti,r.saldo,r.n_alert]));});
 }
 
 // ═══ CUP NAZIONALI ═══
